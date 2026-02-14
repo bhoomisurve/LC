@@ -1,14 +1,13 @@
 class Solution:
     def champagneTower(self, poured: int, query_row: int, query_glass: int) -> float:
-        tow = [[0] * 102 for _ in range(102)]
-        tow[0][0] = poured
+        dp = [[0] * (i+1) for i in range(query_row+1)]
+        dp[0][0] = poured
         
-        for r in range(query_row + 1):
-            for c in range(r + 1):
-                if tow[r][c] > 1:
-                    excess = (tow[r][c] - 1.0) / 2.0
-                    tow[r][c] = 1
-                    tow[r+1][c] += excess
-                    tow[r+1][c+1] += excess
+        for i in range(query_row):
+            for j in range(i+1):
+                excess = dp[i][j] - 1 if dp[i][j] > 1 else 0
+                if excess > 0:
+                    dp[i+1][j+1] += excess / 2
+                    dp[i+1][j] += excess / 2
                     
-        return tow[query_row][query_glass]
+        return min(dp[query_row][query_glass], 1)
