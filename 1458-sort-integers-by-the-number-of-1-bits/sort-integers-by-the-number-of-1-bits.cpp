@@ -1,24 +1,13 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 class Solution {
 public:
-    static int countBits(int x) {
-        int count = 0;
-        while (x > 0) {
-            count += (x & 1);
-            x >>= 1;
-        }
-        return count;
-    }
-
     vector<int> sortByBits(vector<int>& arr) {
-        sort(arr.begin(), arr.end(), [](int a, int b) {
-            int bitsA = countBits(a);
-            int bitsB = countBits(b);
-            if (bitsA == bitsB) return a < b;
-            return bitsA < bitsB;
+        sort(arr.begin(),arr.end() , [] (int a, int b){
+        int countA=__builtin_popcount(a);
+        int countB=__builtin_popcount(b);
+        if(countA==countB) return a<b;
+        return countA<countB;
         });
-        return arr;
+        return arr; 
+        
     }
 };
